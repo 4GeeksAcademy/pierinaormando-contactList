@@ -1,27 +1,19 @@
-import React from "react";
-import "../../styles/home.css";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { ContactCard } from "../component/ContactCard";
+import { Context } from "../store/appContext";
+
 
 export const Home = () => {
+	const { store, actions } = useContext(Context);
 	return (
-		<div>
-			<nav className="navbar mb-3">
-				<Link to="/">
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-success">Add new contact</button>
-					</Link>
-				</div>
-			</nav>
+		<>
+			{
+				store.agenda.map((value, index) => {
+					return <ContactCard contact={value} key={value.id} />
+				})
+			}
+		</>
+	)
+};
 
-			<div className="text-center m-4">
-				<h1>LISTA DE CONTACTOS</h1>
-
-			</div>
-		</div>
-
-	);
-
-}
 
