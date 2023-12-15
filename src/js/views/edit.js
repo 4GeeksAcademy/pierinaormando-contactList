@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-export const Demo = () => {
+export const Edit = () => {
 	const { actions } = useContext(Context);
+	const params = useParams();
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
-	const contactId = queryParams.get("contactId");
+	const contactId = params.id;
+	console.log(contactId);
 
-	const isEditing = !!contactId;
+	const isEditing = contactId;
+	console.log(isEditing);
 
 	const [newContactData, setNewContactData] = useState({
 		full_name: "",
@@ -22,12 +25,13 @@ export const Demo = () => {
 
 	useEffect(() => {
 		if (isEditing) {
+			console.log("isEditing");
 		  actions.getContactById(contactId)
 			.then((data) => {
 			  setNewContactData(data);
 			})
 			.catch((error) => {
-			  console.log("Error uploading contact Id:", error);
+			  console.log("Error uploading contact details:", error);
 			});
 		}
 	  }, [isEditing, contactId]);

@@ -1,19 +1,29 @@
-import React, { useContext } from "react";
-import { ContactCard } from "../component/ContactCard";
-import { Context } from "../store/appContext";
-
+import React, { useEffect, useContext } from "react";
+import { Context } from "../store/appContext"; 
+import { Card }  from "../component/card.jsx"
+import { Link } from "react-router-dom";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+	const {store,actions} = useContext(Context);
+	useEffect(() => {
+		actions.getAgenda();
+	}, [])
+
 	return (
-		<>
-			{
-				store.agenda.map((value, index) => {
-					return <ContactCard contact={value} key={value.id} />
-				})
-			}
-		</>
+		<div className="text-center mt-3">
+			<div className="container d-flex justify-content-end mb-4" style={{width:"82%"}}>
+				<Link to="/demo">
+					<button className="btn btn-success">Add new contact</button>
+				</Link>
+			</div>
+			<div className="container">
+				{store.agenda.map((contact, index) => (
+					<Card
+						data={contact}
+						key={index}
+					/>
+				))}
+			</div>
+		</div>
 	)
 };
-
-
